@@ -1,6 +1,10 @@
 import {Component, OnInit} from "@angular/core";
 import {SimpleBackendService} from "../../services/simple-backend.service";
 import * as _ from "lodash";
+import * as pdfMake from "pdfmake/build/pdfmake";
+import * as pdfFonts from "pdfmake/build/vfs_fonts";
+
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: "app-results-page",
@@ -27,35 +31,32 @@ export class ResultsPageComponent implements OnInit {
   }
 
   printRecord(item) {
-    let printContents, popupWin;
-    printContents = `
-      <h1>${item.name}</h1>
-      <h3>Пол: ${item.sex}</h3>
-      <h3>Возраст: ${item.age}</h3>
-      <h3>Дата прохождения: ${item.date_time}</h3>
-      <span>Дополнительная информация: ${item.description}</span>
-      <ul>
-    `;
+    const words = [["Слово", "Время прохождения"]];
 
     _.forEach(item.wordsHistory, word => {
-      printContents += `<li>Слово: ${word.word}, время: ${word.duration} секунд</li>`;
+      words.push([word.word, word.duration]);
     });
 
-    printContents += `</ul>`;
-    popupWin = window.open("", "_blank", "top=0,left=0,height=100%,width=auto");
-    popupWin.document.open();
-    popupWin.document.write(`
-      <html>
-        <head>
-          <title>Печать результатов</title>
-          <style>
-          //........Customized style.......
-          </style>
-        </head>
-    <body onload="window.print();window.close()">${printContents}</body>
-      </html>`
-    );
-    popupWin.document.close();
+    const docDefinition = {
+      content:
+        [
+          {text: `Имя: ${item.name}`, fontSize: 20},
+          {text: `Возраст: ${item.age}`, fontSize: 15},
+          {text: `Пол: ${item.sex}`, fontSize: 15},
+          {text: `Дополнительная информация: ${item.description}`, fontSize: 15},
+          {text: ``, fontSize: 15},
+          {
+            layout: "lightHorizontalLines",
+            table: {
+              headerRows: 1,
+              widths: ["*", "auto"],
+              body: words
+            }
+          }
+        ]
+    };
+
+    pdfMake.createPdf(docDefinition).download();
   }
 
 }

@@ -30,7 +30,7 @@
   <hr>
   <div class="row">
     <div class="form-group">
-      <label for="inputWordsNum">Количество слов с таймеров (не больше {{words?.length - 5}}):</label>
+      <label for="inputWordsNum">Количество слов с таймеров (не больше {{existingWords - 5}}):</label>
       <input class="form-control" type="number" id="inputWordsNum" [ngModel]="numberOfTimered?.value"
              (ngModelChange)="numberOfTimered.value = $event">
     </div>

@@ -13,6 +13,7 @@ export class SettingsPageComponent implements OnInit {
   public words: any;
   public timer: any;
   public numberOfTimered;
+  public existingWords;
 
   constructor(private backend: SimpleBackendService, private flashMessage: FlashMessagesService) {
   }
@@ -31,11 +32,13 @@ export class SettingsPageComponent implements OnInit {
       })
       .then((data) => {
         this.numberOfTimered = data;
+        this.countWords();
       });
   }
 
   deleteWord(word: any) {
     word.toDelete = true;
+    this.countWords();
   }
 
   addWord() {
@@ -43,6 +46,7 @@ export class SettingsPageComponent implements OnInit {
       word: "",
       toAdd: true
     });
+    this.countWords();
   }
 
   saveWords() {
@@ -69,4 +73,8 @@ export class SettingsPageComponent implements OnInit {
     this.flashMessage.show("Сохранено!", {cssClass: "alert alert-success"});
   }
 
+  countWords() {
+    const existingWords = _.filter(this.words, word => !word.toDelete);
+    this.existingWords = existingWords.length;
+  }
 }
