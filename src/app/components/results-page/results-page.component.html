@@ -1,0 +1,11 @@
+<div class="container">
+  <div class="input-group" *ngFor="let item of history" style="margin-bottom: 20px">
+    <span class="form-control">{{item.name + ' (' + item.date_time + ')'}}</span>
+    <span class="input-group-btn">
+        <button class="btn btn-info" type="button" (click)="printRecord(item)">Распечатать</button>
+      </span>
+    <span class="input-group-btn">
+        <button class="btn btn-danger" type="button" (click)="removeRecord(item)">Удалить</button>
+      </span>
+  </div>
+</div>

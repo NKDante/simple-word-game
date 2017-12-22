@@ -1,0 +1,44 @@
+<div class="container">
+  <h1>Список слов</h1>
+  <ul class="list-group">
+    <div *ngFor="let word of words; trackBy: let idx = index">
+      <li class="list-group-item" *ngIf="!word.toDelete">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">{{idx + 1}}</span>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="word.word">
+          <span class="input-group-btn">
+            <button class="btn btn-danger" type="button" (click)="deleteWord(word)">Удалить</button>
+          </span>
+        </div>
+      </li>
+    </div>
+  </ul>
+  <div class="row">
+    <button type="button" class="btn btn-info" (click)="addWord()">Добавить слово</button>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="form-group">
+      <label for="inputTimer">Время смены слова (в секундах):</label>
+      <input class="form-control" type="number" id="inputTimer" [ngModel]="timer?.value"
+             (ngModelChange)="timer.value = $event">
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="form-group">
+      <label for="inputWordsNum">Количество слов с таймеров (не больше {{words?.length - 5}}):</label>
+      <input class="form-control" type="number" id="inputWordsNum" [ngModel]="numberOfTimered?.value"
+             (ngModelChange)="numberOfTimered.value = $event">
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <button class="btn btn-success" type="button" (click)="saveWords()">Сохранить</button>
+  </div>
+  <hr>
+  <flash-messages></flash-messages>
+</div>

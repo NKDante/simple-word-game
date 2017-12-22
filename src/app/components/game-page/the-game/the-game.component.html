@@ -1,0 +1,7 @@
+<div class="container">
+  <button type="button" class="btn btn-default" (click)="cancelGame()">Отмена</button>
+</div>
+<div class="word-container">
+  <span (document:keyup)="switchWord($event)">{{currentWord?.word}}</span>
+  <span *ngIf="currentWord?.timered" style="color: darkred">{{currentTimer}}</span>
+</div>

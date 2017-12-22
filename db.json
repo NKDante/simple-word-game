@@ -1,19 +1,82 @@
 {
-  "posts": [
+  "thesaurus": [
     {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
+      "word": "aaaaa",
+      "id": 8
+    },
+    {
+      "word": "asdf",
+      "id": 9
+    },
+    {
+      "word": "ffff",
+      "id": 10
+    },
+    {
+      "word": "fasdf",
+      "id": 11
+    },
+    {
+      "word": "asdf",
+      "id": 12
+    },
+    {
+      "word": "dddd",
+      "id": 13
+    },
+    {
+      "word": "fgff",
+      "id": 14
+    },
+    {
+      "word": "gggg",
+      "id": 15
     }
   ],
-  "comments": [
+  "timer": {
+    "value": 5
+  },
+  "timered_words": {
+    "value": 3
+  },
+  "history": [
     {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "name": "никита",
+      "age": "23",
+      "sex": "м",
+      "description": "афыва",
+      "wordsHistory": [
+        {
+          "word": "asdf",
+          "duration": 0
+        },
+        {
+          "word": "ffff",
+          "duration": 0
+        },
+        {
+          "word": "fasdf",
+          "duration": 0
+        },
+        {
+          "word": "asdf",
+          "duration": 0
+        },
+        {
+          "word": "dddd",
+          "duration": 0
+        },
+        {
+          "word": "fgff",
+          "duration": 0
+        },
+        {
+          "word": "gggg",
+          "duration": 0
+        }
+      ],
+      "date_time": "22.12.2017 08:57",
+      "id": 12
     }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+  ]
 }

@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="col-xs-10 col-xs-offset-1">
+    <div class="form-group">
+      <label for="inputName">Имя:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="inputName"
+        [(ngModel)]="base.currentUser.name"
+        placeholder="Введите ваше имя">
+    </div>
+    <div class="form-group">
+      <label for="inputAge">Возраст:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="inputAge"
+        [(ngModel)]="base.currentUser.age"
+        placeholder="Введите ваш возраст">
+    </div>
+    <div class="form-group">
+      <label for="inputSex">Пол:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="inputSex"
+        [(ngModel)]="base.currentUser.sex"
+        placeholder="Введите ваш пол">
+    </div>
+    <div class="form-group">
+      <label for="inputDesctiption">Дополнительные сведения:</label>
+      <textarea
+        class="form-control"
+        id="inputDesctiption"
+        [(ngModel)]="base.currentUser.description"
+        rows="3"></textarea>
+    </div>
+    <button class="btn btn-primary" (click)="base.startGame()">Начать</button>
+  </div>
+</div>
