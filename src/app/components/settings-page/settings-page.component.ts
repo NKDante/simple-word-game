@@ -19,21 +19,10 @@ export class SettingsPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.backend.getCurrentWords()
-      .then((data) => {
-        this.words = data;
-
-        return this.backend.getTimer();
-      })
-      .then((data) => {
-        this.timer = data;
-
-        return this.backend.getNumberOfTimeredWords();
-      })
-      .then((data) => {
-        this.numberOfTimered = data;
-        this.countWords();
-      });
+    this.words = this.backend.getCurrentWords();
+    this.timer = this.backend.getTimer();
+    this.numberOfTimered = this.backend.getNumberOfTimeredWords();
+    this.countWords();
   }
 
   deleteWord(word: any) {

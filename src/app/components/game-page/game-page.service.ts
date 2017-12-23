@@ -9,6 +9,8 @@ export class GamePageService {
   public words;
   public numberOfTimeredWords;
   public timer;
+  public finishMode = false;
+  public previousHistory;
 
   constructor(private backend: SimpleBackendService) {
   }
@@ -27,20 +29,10 @@ export class GamePageService {
   }
 
   getWords() {
-    return this.backend.getCurrentWords()
-      .then((data: any) => {
-        this.words = data;
-
-        return this.backend.getNumberOfTimeredWords();
-      })
-      .then((data: any) => {
-        this.numberOfTimeredWords = data.value;
-
-        return this.backend.getTimer();
-      })
-      .then((data: any) => {
-        this.timer = data.value;
-      });
+    // return this.backend.getCurrentWords()
+    this.words = this.backend.getCurrentWords();
+    this.numberOfTimeredWords = this.backend.getNumberOfTimeredWords();
+    this.timer = this.backend.getTimer();
   }
 
   saveHistory(history) {

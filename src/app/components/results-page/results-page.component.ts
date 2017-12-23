@@ -19,10 +19,7 @@ export class ResultsPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.backend.getHistory()
-      .then((data) => {
-        this.history = data;
-      });
+    this.history = this.backend.getHistory();
   }
 
   removeRecord(item) {

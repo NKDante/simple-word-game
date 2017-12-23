@@ -15,6 +15,7 @@ import {FormsModule} from "@angular/forms";
 import {FlashMessagesModule} from "angular2-flash-messages";
 import {TheGameComponent} from "./components/game-page/the-game/the-game.component";
 import {ResultsPageComponent} from "./components/results-page/results-page.component";
+import {FinishPageComponent} from "./components/game-page/finish-page/finish-page.component";
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {ResultsPageComponent} from "./components/results-page/results-page.compo
     SettingsPageComponent,
     UserFormComponent,
     TheGameComponent,
-    ResultsPageComponent
+    ResultsPageComponent,
+    FinishPageComponent
   ],
   imports: [
     BrowserModule,

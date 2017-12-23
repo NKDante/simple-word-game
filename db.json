@@ -5,22 +5,6 @@
       "id": 8
     },
     {
-      "word": "ывапывап",
-      "id": 9
-    },
-    {
-      "word": "ывапывап",
-      "id": 10
-    },
-    {
-      "word": "ывапывап",
-      "id": 11
-    },
-    {
-      "word": "ывапывап",
-      "id": 12
-    },
-    {
       "word": "sdfasdf",
       "id": 13
     },
@@ -49,38 +33,38 @@
     "value": 5
   },
   "timered_words": {
-    "value": 3
+    "value": 2
   },
   "history": [
     {
-      "name": "никита",
-      "age": "21",
-      "sex": "м",
-      "description": "",
+      "name": "Никита",
+      "age": "23",
+      "sex": "М",
+      "description": "Ничего",
       "wordsHistory": [
+        {
+          "word": "ывапывап",
+          "duration": 3
+        },
         {
           "word": "ывапывап",
           "duration": 1
         },
         {
           "word": "ывапывап",
-          "duration": 0
+          "duration": 1
         },
         {
           "word": "ывапывап",
-          "duration": 0
-        },
-        {
-          "word": "ывапывап",
-          "duration": 0
+          "duration": 1
         },
         {
           "word": "sdfasdf",
-          "duration": 0
+          "duration": 2
         },
         {
           "word": "asdfsdf",
-          "duration": 0
+          "duration": 1
         },
         {
           "word": "sdfgdfg",
@@ -92,65 +76,15 @@
         },
         {
           "word": "dfg",
-          "duration": 0
-        },
-        {
-          "word": "dfgsdfg",
-          "duration": 0
-        }
-      ],
-      "date_time": "22.12.2017 11:52",
-      "id": 14
-    },
-    {
-      "name": "fysdfsd",
-      "age": "21",
-      "sex": "m",
-      "description": "gldkg jgsdlfgsd glsjd fhgklsdjf gdfj hgdkjslfg hkldjg hkldj gkljs hgkljdh glkjsdhf gklshd gkljhs dlkgjahldkh aslkdfh lkas gk gkldhkglhsdlkgh sdklfg dkjg dkgh dskfgh sdlkgh ksdlfh gkldsf gkdjshgk lsdjg kldfjh gd ",
-      "wordsHistory": [
-        {
-          "word": "ывапывап",
           "duration": 1
         },
         {
-          "word": "ывапывап",
-          "duration": 0
-        },
-        {
-          "word": "ывапывап",
-          "duration": 0
-        },
-        {
-          "word": "ывапывап",
-          "duration": 0
-        },
-        {
-          "word": "sdfasdf",
-          "duration": 1
-        },
-        {
-          "word": "asdfsdf",
-          "duration": 0
-        },
-        {
-          "word": "sdfgdfg",
-          "duration": 0
-        },
-        {
-          "word": "dddfgdfg",
-          "duration": 0
-        },
-        {
-          "word": "dfg",
-          "duration": 0
-        },
-        {
           "word": "dfgsdfg",
-          "duration": 0
+          "duration": 1
         }
       ],
-      "date_time": "22.12.2017 12:08",
-      "id": 15
+      "date_time": "22.12.2017 12:26",
+      "id": 16
     }
   ]
 }

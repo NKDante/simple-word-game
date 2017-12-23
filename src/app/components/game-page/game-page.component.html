@@ -1,2 +1,3 @@
-<app-user-form *ngIf="!base.gameMode"></app-user-form>
+<app-user-form *ngIf="!base.gameMode && !base.finishMode"></app-user-form>
 <app-the-game *ngIf="base.gameMode"></app-the-game>
+<app-finish-page *ngIf="base.finishMode"></app-finish-page>

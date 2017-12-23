@@ -25,33 +25,28 @@ export class TheGameComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.base.getWords()
-      .then(() => {
-        this.currentWord = this.base.words[this.currentWordsIndex];
-        this.currentHistory = {
-          name: this.base.currentUser.name,
-          age: this.base.currentUser.age,
-          sex: this.base.currentUser.sex,
-          description: this.base.currentUser.description,
-          wordsHistory: []
-        };
+    this.base.getWords();
+    this.currentWord = this.base.words[this.currentWordsIndex];
+    this.currentHistory = {
+      name: this.base.currentUser.name,
+      age: this.base.currentUser.age,
+      sex: this.base.currentUser.sex,
+      description: this.base.currentUser.description,
+      wordsHistory: []
+    };
 
-        const randArray = [];
+    const randArray = [];
+    while (randArray.length < this.base.numberOfTimeredWords.value) {
+      const rand = Math.floor(_.random(3, this.base.words.length - 2));
+      if (randArray.indexOf(rand) > -1) {
+        continue;
+      }
+      randArray.push(rand);
+    }
 
-        while (randArray.length < this.base.numberOfTimeredWords) {
-          const rand = Math.floor(_.random(3, this.base.words.length - 2));
-          if (randArray.indexOf(rand) > -1) {
-            continue;
-          }
-          randArray.push(rand);
-        }
-
-        _.forEach(this.base.words, (word, index) => {
-          word.timered = _.includes(randArray, index);
-        });
-
-        console.log(this.base.words, randArray);
-      });
+    _.forEach(this.base.words, (word, index) => {
+      word.timered = _.includes(randArray, index);
+    });
   }
 
   cancelGame() {
@@ -62,9 +57,10 @@ export class TheGameComponent implements OnInit {
 
   startTicking() {
     this.subscribe = this.source.subscribe(val => {
-      this.currentTimer = val + 1;
+      this.currentTimer = this.base.timer.value - val;
+      console.log(this.currentTimer, this.base.timer.value)
 
-      if (this.currentTimer > this.base.timer) {
+      if (this.currentTimer === 0) {
         this.subscribe.unsubscribe();
         this.switchWord({code: "Space"});
       }
@@ -96,7 +92,9 @@ export class TheGameComponent implements OnInit {
         this.currentHistory.date_time = moment().format("DD.MM.YYYY HH:mm");
         this.base.saveHistory(this.currentHistory);
         this.base.gameMode = false;
+        this.base.previousHistory = _.clone(this.currentHistory);
         this.base.initNewUser();
+        this.base.finishMode = true;
       }
     }
   }

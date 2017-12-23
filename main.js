@@ -1,4 +1,5 @@
 const {app, BrowserWindow} = require('electron')
+const storage = require('electron-storage');
 let win;
 
 function createWindow() {
@@ -35,15 +36,15 @@ app.on('activate', function () {
 })
 
 
-const electronify = require('electronify-server');
-
-electronify({
-  url: '',
-  command: 'json-server --watch db.json',
-  ready: function (app) {
-    // application event listeners could be added here
-  }
-});
+// const electronify = require('electronify-server');
+//
+// electronify({
+//   url: '',
+//   command: 'json-server --watch db.json',
+//   ready: function (app) {
+//     // application event listeners could be added here
+//   }
+// });
 
 // var electronify = require('electronify-server');
 

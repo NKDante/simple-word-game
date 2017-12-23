@@ -30,15 +30,15 @@
   <hr>
   <div class="row">
     <div class="form-group">
-      <label for="inputWordsNum">Количество слов с таймеров (не больше {{existingWords - 5}}):</label>
+      <label for="inputWordsNum">Количество слов с таймером (не больше {{existingWords - 5}}):</label>
       <input class="form-control" type="number" id="inputWordsNum" [ngModel]="numberOfTimered?.value"
              (ngModelChange)="numberOfTimered.value = $event">
     </div>
   </div>
-  <hr>
-  <div class="row">
-    <button class="btn btn-success" type="button" (click)="saveWords()">Сохранить</button>
-  </div>
+  <!--<hr>-->
+  <!--<div class="row">-->
+  <!--<button class="btn btn-success" type="button" (click)="saveWords()">Сохранить</button>-->
+  <!--</div>-->
   <hr>
   <flash-messages></flash-messages>
 </div>
