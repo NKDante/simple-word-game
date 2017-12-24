@@ -1,6 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {GamePageService} from "../game-page.service";
 import * as _ from "lodash";
+import * as moment from "moment";
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 
@@ -49,7 +50,9 @@ export class FinishPageComponent implements OnInit {
         ]
     };
 
-    pdfMake.createPdf(docDefinition).download();
+    pdfMake.createPdf(docDefinition)
+      .download(`${this.base.previousHistory.name}-${moment(this.base.previousHistory.date_time, "DD.MM.YYYY HH:mm:ss")
+        .format("YYYYMMDDHHmmss")}.pdf`);
   }
 
 }

@@ -1,20 +1,22 @@
 <div class="container">
   <h1>Список слов</h1>
   <ul class="list-group">
-    <div *ngFor="let word of words; trackBy: let idx = index">
-      <li class="list-group-item" *ngIf="!word.toDelete">
-        <div class="input-group">
-          <span class="input-group-addon" id="basic-addon1">{{idx + 1}}</span>
-          <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="word.word">
-          <span class="input-group-btn">
-            <button class="btn btn-danger" type="button" (click)="deleteWord(word)">Удалить</button>
-          </span>
+    <li class="list-group-item" *ngFor="let word of words; trackBy: let idx = index">
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">{{idx + 1}}</span>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="word.word">
+        <div class="input-group-addon" style="user-select: none; cursor:pointer;">
+          <input style="cursor:pointer" type="checkbox" id="{{word.word}}" [(ngModel)]="word.timered">
+          <label style="cursor:pointer" for="{{word.word}}">Включить таймер для этого слова</label>
         </div>
-      </li>
-    </div>
+        <span class="input-group-btn">
+          <button class="btn btn-danger" type="button" (click)="deleteWord(word)">Удалить</button>
+        </span>
+      </div>
+    </li>
   </ul>
   <div class="row">
     <button type="button" class="btn btn-info" (click)="addWord()">Добавить слово</button>
@@ -27,18 +29,18 @@
              (ngModelChange)="timer.value = $event">
     </div>
   </div>
-  <hr>
-  <div class="row">
-    <div class="form-group">
-      <label for="inputWordsNum">Количество слов с таймером (не больше {{existingWords - 5}}):</label>
-      <input class="form-control" type="number" id="inputWordsNum" [ngModel]="numberOfTimered?.value"
-             (ngModelChange)="numberOfTimered.value = $event">
-    </div>
-  </div>
+  <!--<hr>-->
+  <!--<div class="row">-->
+  <!--<div class="form-group">-->
+  <!--<label for="inputWordsNum">Количество слов с таймером (не больше {{existingWords - 5}}):</label>-->
+  <!--<input class="form-control" type="number" id="inputWordsNum" [ngModel]="numberOfTimered?.value"-->
+  <!--(ngModelChange)="numberOfTimered.value = $event">-->
+  <!--</div>-->
+  <!--</div>-->
   <!--<hr>-->
   <!--<div class="row">-->
   <!--<button class="btn btn-success" type="button" (click)="saveWords()">Сохранить</button>-->
   <!--</div>-->
-  <hr>
+  <!--<hr>-->
   <flash-messages></flash-messages>
 </div>

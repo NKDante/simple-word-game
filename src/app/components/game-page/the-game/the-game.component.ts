@@ -35,18 +35,18 @@ export class TheGameComponent implements OnInit {
       wordsHistory: []
     };
 
-    const randArray = [];
-    while (randArray.length < this.base.numberOfTimeredWords.value) {
-      const rand = Math.floor(_.random(3, this.base.words.length - 2));
-      if (randArray.indexOf(rand) > -1) {
-        continue;
-      }
-      randArray.push(rand);
-    }
-
-    _.forEach(this.base.words, (word, index) => {
-      word.timered = _.includes(randArray, index);
-    });
+    // const randArray = [];
+    // while (randArray.length < this.base.numberOfTimeredWords.value) {
+    //   const rand = Math.floor(_.random(3, this.base.words.length - 2));
+    //   if (randArray.indexOf(rand) > -1) {
+    //     continue;
+    //   }
+    //   randArray.push(rand);
+    // }
+    //
+    // _.forEach(this.base.words, (word, index) => {
+    //   word.timered = _.includes(randArray, index);
+    // });
   }
 
   cancelGame() {
@@ -89,7 +89,7 @@ export class TheGameComponent implements OnInit {
           this.startTicking();
         }
       } else {
-        this.currentHistory.date_time = moment().format("DD.MM.YYYY HH:mm");
+        this.currentHistory.date_time = moment().format("DD.MM.YYYY HH:mm:ss");
         this.base.saveHistory(this.currentHistory);
         this.base.gameMode = false;
         this.base.previousHistory = _.clone(this.currentHistory);

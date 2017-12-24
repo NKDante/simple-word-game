@@ -3,6 +3,7 @@ import {SimpleBackendService} from "../../services/simple-backend.service";
 import * as _ from "lodash";
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
+import * as moment from "moment";
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -53,7 +54,9 @@ export class ResultsPageComponent implements OnInit {
         ]
     };
 
-    pdfMake.createPdf(docDefinition).download();
+    pdfMake.createPdf(docDefinition)
+      .download(`${item.name}-${moment(item.date_time, "DD.MM.YYYY HH:mm:ss")
+        .format("YYYYMMDDHHmmss")}.pdf`);
   }
 
 }

@@ -1,5 +1,4 @@
 const {app, BrowserWindow} = require('electron')
-const storage = require('electron-storage');
 let win;
 
 function createWindow() {

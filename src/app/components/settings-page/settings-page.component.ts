@@ -26,7 +26,8 @@ export class SettingsPageComponent implements OnInit {
   }
 
   deleteWord(word: any) {
-    word.toDelete = true;
+    this.words = _.reject(this.words, word);
+    this.backend.deleteWord(word)
     this.countWords();
   }
 
