@@ -78,11 +78,12 @@ export class TheGameComponent implements OnInit {
 
         const ms = moment().diff(this.previousTime);
         this.previousTime = moment();
-        const duration = moment.duration(ms).asSeconds();
+        const dur = moment.duration(ms).asMilliseconds();
+        const duration = (dur / 1000).toFixed(2);
 
         this.currentHistory.wordsHistory.push({
           word: this.currentWord.word,
-          duration: Math.floor(duration)
+          duration
         });
 
         if (this.currentWord.timered) {
