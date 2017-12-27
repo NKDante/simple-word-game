@@ -1,6 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {GamePageService} from "../game-page.service";
-import * as ExportJsonExcel from "js-export-excel";
+import {Angular2Csv} from "angular2-csv/Angular2-csv";
+// import * as ExportJsonExcel from "js-export-excel";
 import * as _ from "lodash";
 import * as moment from "moment";
 
@@ -22,46 +23,60 @@ export class FinishPageComponent implements OnInit {
   }
 
   printRecord() {
-    const option = {fileName: "", datas: []};
-
-    option.fileName = `${this.base.previousHistory.name}-${moment(this.base.previousHistory.date_time, "DD.MM.YYYY HH:mm:ss")
-      .format("YYYYMMDDHHmmss")}`;
-    option.datas = [
-      {
-        sheetData: [
-          {text: `Имя:`, value: this.base.previousHistory.name},
-          {text: `Возраст:`, value: this.base.previousHistory.age},
-          {text: `Пол:`, value: this.base.previousHistory.sex},
-          {text: `Дополнительная информация:`, value: this.base.previousHistory.description},
-          {text: ``}
-        ],
-        sheetName: "sheet"
-      }
-    ];
-
-    _.forEach(this.base.previousHistory.wordsHistory, word => {
-      option.datas[0].sheetData.push({
-        text: word.word, value: word.duration,
-        timered: word.timered ? "Слово с таймером" : "Слово без таймера"
-      });
-    });
-    const toExcel = new ExportJsonExcel(option);
-    toExcel.saveExcel();
-
-    // const data = [
-    //   {text: `Имя:`, value: this.base.previousHistory.name},
-    //   {text: `Возраст:`, value: this.base.previousHistory.age},
-    //   {text: `Пол:`, value: this.base.previousHistory.sex},
-    //   {text: `Дополнительная информация:`, value: this.base.previousHistory.description},
-    //   {text: ``}
+    // const option = {fileName: "", datas: []};
+    //
+    // option.fileName = `${this.base.previousHistory.name}-${moment(this.base.previousHistory.date_time, "DD.MM.YYYY HH:mm:ss")
+    //   .format("YYYYMMDDHHmmss")}`;
+    // option.datas = [
+    //   {
+    //     sheetData: [
+    //       {text: `Имя:`, value: this.base.previousHistory.name},
+    //       {text: `Возраст:`, value: this.base.previousHistory.age},
+    //       {text: `Пол:`, value: this.base.previousHistory.sex},
+    //       {text: `Дополнительная информация:`, value: this.base.previousHistory.description},
+    //       {text: ``}
+    //     ],
+    //     sheetName: "sheet"
+    //   }
     // ];
     //
     // _.forEach(this.base.previousHistory.wordsHistory, word => {
-    //   data.push({text: word.word, value: word.duration});
+    //   option.datas[0].sheetData.push({
+    //     text: word.word, value: word.duration,
+    //     timered: word.timered ? "Слово с таймером" : "Слово без таймера"
+    //   });
     // });
-    //
-    // new Angular2Csv(data, `${this.base.previousHistory.name}-${moment(this.base.previousHistory.date_time, "DD.MM.YYYY HH:mm:ss")
-    //   .format("YYYYMMDDHHmmss")}`);
+    // const toExcel = new ExportJsonExcel(option);
+    // toExcel.saveExcel();
+
+    const options = {
+      fieldSeparator: `;`,
+      quoteStrings: `"`,
+      decimalseparator: `,`,
+      showLabels: true,
+      showTitle: false,
+      useBom: true
+    };
+
+    const data = [
+      {text: `Имя:`, value: this.base.previousHistory.name, timered: ""},
+      {text: `Возраст:`, value: this.base.previousHistory.age, timered: ""},
+      {text: `Пол:`, value: this.base.previousHistory.sex, timered: ""},
+      {text: `Дополнительная информация:`, value: this.base.previousHistory.description, timered: ""},
+      {text: ``, value: "", timered: ""}
+    ];
+
+    _.forEach(this.base.previousHistory.wordsHistory, word => {
+      const timered = word.timered ? "Слово с таймером" : "Слово без таймера";
+      data.push({
+        text: word.word,
+        value: word.duration,
+        timered
+      });
+    });
+
+    new Angular2Csv(data, `${this.base.previousHistory.name}-${moment(this.base.previousHistory.date_time, "DD.MM.YYYY HH:mm:ss")
+      .format("YYYYMMDDHHmmss")}`, options);
 
 
     // const words = [["Слово", "Время прохождения"]];

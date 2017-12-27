@@ -1,6 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {SimpleBackendService} from "../../services/simple-backend.service";
-import * as ExportJsonExcel from "js-export-excel";
+// import * as ExportJsonExcel from "js-export-excel";
+import {Angular2Csv} from "angular2-csv/Angular2-csv";
 import * as _ from "lodash";
 import * as moment from "moment";
 
@@ -26,45 +27,62 @@ export class ResultsPageComponent implements OnInit {
   }
 
   printRecord(item) {
-    const option = {fileName: "", datas: []};
 
-    option.fileName = `${item.name}-${moment(item.date_time, "DD.MM.YYYY HH:mm:ss")
-      .format("YYYYMMDDHHmmss")}`;
-    option.datas = [
-      {
-        sheetData: [
-          {text: `Имя:`, value: item.name},
-          {text: `Возраст:`, value: item.age},
-          {text: `Пол:`, value: item.sex},
-          {text: `Дополнительная информация:`, value: item.description},
-          {text: ``}
-        ],
-        sheetName: "sheet"
-      }
-    ];
-
-    _.forEach(item.wordsHistory, word => {
-      option.datas[0].sheetData.push({
-        text: word.word, value: word.duration,
-        timered: word.timered ? "Слово с таймером" : "Слово без таймера"
-      });
-    });
-    const toExcel = new ExportJsonExcel(option);
-    toExcel.saveExcel();
-    // const data = [
-    //   {text: `Имя:`, value: item.name},
-    //   {text: `Возраст:`, value: item.age},
-    //   {text: `Пол:`, value: item.sex},
-    //   {text: `Дополнительная информация:`, value: item.description},
-    //   {text: ``}
+    // const option = {fileName: "", datas: []};
+    //
+    // option.fileName = `${item.name}-${moment(item.date_time, "DD.MM.YYYY HH:mm:ss")
+    //   .format("YYYYMMDDHHmmss")}`;
+    // option.datas = [
+    //   {
+    //     sheetData: [
+    //       {text: `Имя:`, value: item.name},
+    //       {text: `Возраст:`, value: item.age},
+    //       {text: `Пол:`, value: item.sex},
+    //       {text: `Дополнительная информация:`, value: item.description},
+    //       {text: ``}
+    //     ],
+    //     sheetName: "sheet"
+    //   }
     // ];
     //
     // _.forEach(item.wordsHistory, word => {
-    //   data.push({text: word.word, value: word.duration});
+    //   option.datas[0].sheetData.push({
+    //     text: word.word, value: word.duration,
+    //     timered: word.timered ? "Слово с таймером" : "Слово без таймера"
+    //   });
     // });
-    //
-    // new Angular2Csv(data, `${item.name}-${moment(item.date_time, "DD.MM.YYYY HH:mm:ss")
-    //   .format("YYYYMMDDHHmmss")}`);
+    // const toExcel = new ExportJsonExcel(option);
+    // toExcel.saveExcel();
+
+    const options = {
+      fieldSeparator: `;`,
+      quoteStrings: `"`,
+      decimalseparator: `,`,
+      showLabels: true,
+      showTitle: false,
+      useBom: true
+    };
+
+    const data = [
+      {text: `Имя:`, value: item.name, timered: ""},
+      {text: `Возраст:`, value: item.age, timered: ""},
+      {text: `Пол:`, value: item.sex, timered: ""},
+      {text: `Дополнительная информация:`, value: item.description, timered: ""},
+      {text: ``, value: "", timered: ""}
+    ];
+
+    _.forEach(item.wordsHistory, word => {
+      const timered = word.timered ? "Слово с таймером" : "Слово без таймера";
+      data.push({
+        text: word.word,
+        value: word.duration,
+        timered
+      });
+    });
+
+    new Angular2Csv(data, `${item.name}-${moment(item.date_time, "DD.MM.YYYY HH:mm:ss")
+      .format("YYYYMMDDHHmmss")}`, options);
+
     // const words = [["Слово", "Время прохождения"]];
     //
     // _.forEach(item.wordsHistory, word => {
