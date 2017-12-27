@@ -58,7 +58,7 @@ export class TheGameComponent implements OnInit {
   startTicking() {
     this.subscribe = this.source.subscribe(val => {
       this.currentTimer = this.base.timer.value - val;
-      console.log(this.currentTimer, this.base.timer.value)
+      console.log(this.currentTimer, this.base.timer.value);
 
       if (this.currentTimer === 0) {
         this.subscribe.unsubscribe();
@@ -72,19 +72,26 @@ export class TheGameComponent implements OnInit {
       if (this.subscribe) {
         this.subscribe.unsubscribe();
       }
+
+      const ms = moment().diff(this.previousTime);
+      this.previousTime = moment();
+      const dur = moment.duration(ms).asMilliseconds();
+      let duration;
+      if (this.currentWord.timered && (dur / 1000) > this.base.timer.value) {
+        duration = Math.floor(dur / 1000).toFixed(2);
+      } else {
+        duration = (dur / 1000).toFixed(2);
+      }
+
+      this.currentHistory.wordsHistory.push({
+        word: this.currentWord.word,
+        duration,
+        timered: this.currentWord.timered
+      });
+
       this.currentWordsIndex++;
       if (this.currentWordsIndex !== this.base.words.length) {
         this.currentWord = this.base.words[this.currentWordsIndex];
-
-        const ms = moment().diff(this.previousTime);
-        this.previousTime = moment();
-        const dur = moment.duration(ms).asMilliseconds();
-        const duration = (dur / 1000).toFixed(2);
-
-        this.currentHistory.wordsHistory.push({
-          word: this.currentWord.word,
-          duration
-        });
 
         if (this.currentWord.timered) {
           this.startTicking();

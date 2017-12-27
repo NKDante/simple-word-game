@@ -1,12 +1,8 @@
 import {Component, OnInit} from "@angular/core";
 import {GamePageService} from "../game-page.service";
+import * as ExportJsonExcel from "js-export-excel";
 import * as _ from "lodash";
 import * as moment from "moment";
-import * as pdfMake from "pdfmake/build/pdfmake";
-import * as pdfFonts from "pdfmake/build/vfs_fonts";
-import {Angular2Csv} from "angular2-csv/Angular2-csv";
-
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: "app-finish-page",
@@ -26,20 +22,48 @@ export class FinishPageComponent implements OnInit {
   }
 
   printRecord() {
-    const data = [
-      {text: `Имя:`, value: this.base.previousHistory.name},
-      {text: `Возраст:`, value: this.base.previousHistory.age},
-      {text: `Пол:`, value: this.base.previousHistory.sex},
-      {text: `Дополнительная информация:`, value: this.base.previousHistory.description},
-      {text: ``}
+    const option = {fileName: "", datas: []};
+
+    option.fileName = `${this.base.previousHistory.name}-${moment(this.base.previousHistory.date_time, "DD.MM.YYYY HH:mm:ss")
+      .format("YYYYMMDDHHmmss")}`;
+    option.datas = [
+      {
+        sheetData: [
+          {text: `Имя:`, value: this.base.previousHistory.name},
+          {text: `Возраст:`, value: this.base.previousHistory.age},
+          {text: `Пол:`, value: this.base.previousHistory.sex},
+          {text: `Дополнительная информация:`, value: this.base.previousHistory.description},
+          {text: ``}
+        ],
+        sheetName: "sheet"
+      }
     ];
 
     _.forEach(this.base.previousHistory.wordsHistory, word => {
-      data.push({text: word.word, value: word.duration});
+      option.datas[0].sheetData.push({
+        text: word.word, value: word.duration,
+        timered: word.timered ? "Слово с таймером" : "Слово без таймера"
+      });
     });
+    const toExcel = new ExportJsonExcel(option);
+    toExcel.saveExcel();
 
-    new Angular2Csv(data, `${this.base.previousHistory.name}-${moment(this.base.previousHistory.date_time, "DD.MM.YYYY HH:mm:ss")
-      .format("YYYYMMDDHHmmss")}`);
+    // const data = [
+    //   {text: `Имя:`, value: this.base.previousHistory.name},
+    //   {text: `Возраст:`, value: this.base.previousHistory.age},
+    //   {text: `Пол:`, value: this.base.previousHistory.sex},
+    //   {text: `Дополнительная информация:`, value: this.base.previousHistory.description},
+    //   {text: ``}
+    // ];
+    //
+    // _.forEach(this.base.previousHistory.wordsHistory, word => {
+    //   data.push({text: word.word, value: word.duration});
+    // });
+    //
+    // new Angular2Csv(data, `${this.base.previousHistory.name}-${moment(this.base.previousHistory.date_time, "DD.MM.YYYY HH:mm:ss")
+    //   .format("YYYYMMDDHHmmss")}`);
+
+
     // const words = [["Слово", "Время прохождения"]];
     //
     // _.forEach(this.base.previousHistory.wordsHistory, word => {

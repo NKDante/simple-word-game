@@ -1,12 +1,8 @@
 import {Component, OnInit} from "@angular/core";
 import {SimpleBackendService} from "../../services/simple-backend.service";
+import * as ExportJsonExcel from "js-export-excel";
 import * as _ from "lodash";
-import * as pdfMake from "pdfmake/build/pdfmake";
-import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import * as moment from "moment";
-import {Angular2Csv} from "angular2-csv";
-
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: "app-results-page",
@@ -30,20 +26,45 @@ export class ResultsPageComponent implements OnInit {
   }
 
   printRecord(item) {
-    const data = [
-      {text: `Имя:`, value: item.name},
-      {text: `Возраст:`, value: item.age},
-      {text: `Пол:`, value: item.sex},
-      {text: `Дополнительная информация:`, value: item.description},
-      {text: ``}
+    const option = {fileName: "", datas: []};
+
+    option.fileName = `${item.name}-${moment(item.date_time, "DD.MM.YYYY HH:mm:ss")
+      .format("YYYYMMDDHHmmss")}`;
+    option.datas = [
+      {
+        sheetData: [
+          {text: `Имя:`, value: item.name},
+          {text: `Возраст:`, value: item.age},
+          {text: `Пол:`, value: item.sex},
+          {text: `Дополнительная информация:`, value: item.description},
+          {text: ``}
+        ],
+        sheetName: "sheet"
+      }
     ];
 
     _.forEach(item.wordsHistory, word => {
-      data.push({text: word.word, value: word.duration});
+      option.datas[0].sheetData.push({
+        text: word.word, value: word.duration,
+        timered: word.timered ? "Слово с таймером" : "Слово без таймера"
+      });
     });
-
-    new Angular2Csv(data, `${item.name}-${moment(item.date_time, "DD.MM.YYYY HH:mm:ss")
-      .format("YYYYMMDDHHmmss")}`);
+    const toExcel = new ExportJsonExcel(option);
+    toExcel.saveExcel();
+    // const data = [
+    //   {text: `Имя:`, value: item.name},
+    //   {text: `Возраст:`, value: item.age},
+    //   {text: `Пол:`, value: item.sex},
+    //   {text: `Дополнительная информация:`, value: item.description},
+    //   {text: ``}
+    // ];
+    //
+    // _.forEach(item.wordsHistory, word => {
+    //   data.push({text: word.word, value: word.duration});
+    // });
+    //
+    // new Angular2Csv(data, `${item.name}-${moment(item.date_time, "DD.MM.YYYY HH:mm:ss")
+    //   .format("YYYYMMDDHHmmss")}`);
     // const words = [["Слово", "Время прохождения"]];
     //
     // _.forEach(item.wordsHistory, word => {
