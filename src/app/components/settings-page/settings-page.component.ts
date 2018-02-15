@@ -14,6 +14,7 @@ export class SettingsPageComponent implements OnInit {
   public timer: any;
   public numberOfTimered;
   public existingWords;
+  public fileName;
 
   constructor(private backend: SimpleBackendService, private flashMessage: FlashMessagesService) {
   }
@@ -66,5 +67,24 @@ export class SettingsPageComponent implements OnInit {
   countWords() {
     const existingWords = _.filter(this.words, word => !word.toDelete);
     this.existingWords = existingWords.length;
+  }
+
+  openFile(event) {
+    const input = event.target;
+    let text;
+    for (let index = 0; index < input.files.length; index++) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        text = reader.result;
+        this.fileName = input.files[0].name;
+        const readWords = text.split(";");
+        this.backend.uploadWords(readWords);
+        this.words = this.backend.getCurrentWords();
+        this.timer = this.backend.getTimer();
+        this.numberOfTimered = this.backend.getNumberOfTimeredWords();
+        this.countWords();
+      };
+      reader.readAsText(input.files[index]);
+    }
   }
 }

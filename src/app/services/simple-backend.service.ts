@@ -89,6 +89,17 @@ export class SimpleBackendService {
     //   .toPromise();
     db.history = _.reject(db.history, item);
   }
+
+  uploadWords(readWords) {
+    db.thesaurus = [];
+    _.forEach(readWords, (word, index) => {
+      db.thesaurus.push({
+        "word": word,
+        "id": index + 1,
+        timered: Boolean(_.random(0, 1))
+      });
+    });
+  }
 }
 
 const db = {

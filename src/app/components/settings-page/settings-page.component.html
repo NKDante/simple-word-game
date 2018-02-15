@@ -1,4 +1,8 @@
 <div class="container">
+  <h1>Загрузить свой список слов</h1>
+  <div class="file-upload" data-text="Выберите файл">
+    <input type="file" accept="text/plain" multiple (change)="openFile($event)">
+  </div>
   <h1>Список слов</h1>
   <ul class="list-group">
     <li class="list-group-item" *ngFor="let word of words; trackBy: let idx = index">

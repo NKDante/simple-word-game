@@ -52,7 +52,7 @@ export class FinishPageComponent implements OnInit {
     const options = {
       fieldSeparator: `;`,
       quoteStrings: `"`,
-      decimalseparator: `,`,
+      decimalSeparator: `,`,
       showLabels: true,
       showTitle: false,
       useBom: true
@@ -70,7 +70,7 @@ export class FinishPageComponent implements OnInit {
       const timered = word.timered ? "Слово с таймером" : "Слово без таймера";
       data.push({
         text: word.word,
-        value: word.duration,
+        value: word.duration.replace(".", ","),
         timered
       });
     });
