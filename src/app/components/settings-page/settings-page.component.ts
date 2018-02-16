@@ -74,6 +74,7 @@ export class SettingsPageComponent implements OnInit {
     let text;
     for (let index = 0; index < input.files.length; index++) {
       const reader = new FileReader();
+      reader.readAsText(input.files[index], "CP1251");
       reader.onload = () => {
         text = reader.result;
         this.fileName = input.files[0].name;
@@ -84,7 +85,6 @@ export class SettingsPageComponent implements OnInit {
         this.numberOfTimered = this.backend.getNumberOfTimeredWords();
         this.countWords();
       };
-      reader.readAsText(input.files[index]);
     }
   }
 }
